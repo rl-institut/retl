@@ -1,0 +1,15 @@
+[project]
+name = "retl"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "platformdirs>=2.4.0",
+    "pyyaml>=6.0.2",
+    "rclone-python>=0.1.21",
+    "rich>=13.7.0",
+]
+
+[project.scripts]
+retl = "retl.main:main"
