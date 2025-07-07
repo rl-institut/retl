@@ -97,7 +97,7 @@ def clone_files(config: dict) -> None:
     for remote, remote_config in config.items():
         logger.info(f"Cloning files for remote '{remote}':")
         for file_config in remote_config["files"]:
-            rclone.copy(
+            rclone.sync(
                 f"""{remote}:{file_config["source"]}""",
                 file_config["target"],
                 args=("--config", str(rclone_config_file))
