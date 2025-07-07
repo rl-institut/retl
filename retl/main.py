@@ -57,7 +57,16 @@ def authorize_remotes(retl_config: dict) -> dict:
         logger.info(f"Authorizing remote '{remote_config['type']}'")
         command = ["rclone", "authorize", remote_config['type']]
         authorize_result = execute_rclone_command(command)
-        token = authorize_result.split("\n")[1]
+
+        # Extract token from authorization:
+        start_marker = "--->\n"
+        end_marker = "\n<---"
+        start_idx = authorize_result.find(start_marker) + len(start_marker)
+        end_idx = authorize_result.find(end_marker)
+        if start_idx == -1 or end_idx == -1:
+            raise RuntimeError("Failed to extract token from rclone authorize output.")
+        token = authorize_result[start_idx:end_idx]
+
         authorized_remotes[remote_config["type"]] = token
         remote_config["token"] = token
     return retl_config
