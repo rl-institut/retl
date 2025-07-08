@@ -91,7 +91,7 @@ def set_up_and_load_rclone_config_file(project_name: str, retl_config: dict) -> 
 def execute_rclone_command(command: list) -> str | None:
     """Execute rclone command and handle errors."""
     if rclone_config_file:
-        command.insert(1, f"--config={rclone_config_file}")
+        command.insert(1, f'--config="{rclone_config_file}"')
     try:
         result = subprocess.run(command, check=True, capture_output=True, text=True)
         if result.stdout:
@@ -109,7 +109,7 @@ def clone_files(config: dict) -> None:
             rclone.sync(
                 f"""{remote}:{file_config["source"]}""",
                 file_config["target"],
-                args=("--config", str(rclone_config_file))
+                args=("--config", f'"{str(rclone_config_file)}"')
             )
 
 
